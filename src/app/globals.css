@@ -65,6 +65,145 @@ main:not(.site-shell) [class*="shadow"] { box-shadow: var(--shadow) !important; 
 main:not(.site-shell) button { border-radius: 2px; }
 main:not(.site-shell) h1, main:not(.site-shell) h2, main:not(.site-shell) p, main:not(.site-shell) label, main:not(.site-shell) button { overflow-wrap: anywhere; }
 
+.site-shell .topbar { min-height: 60px; }
+.site-shell .hero-section { min-height: 350px; gap: 32px; padding-block: 32px 26px; }
+.site-shell .hero-copy h1 { font-size: clamp(32px, 3.8vw, 48px); }
+.site-shell .hero-text { margin-block: 11px 15px; font-size: 11px; }
+.site-shell .hero-meta { margin-top: 18px; }
+.site-shell .hero-art { min-height: 220px; }
+.site-shell .tool-card { min-height: 62px; padding-block: 8px; }
+.site-shell .content-section { padding-top: 42px; }
+.site-shell .section-heading h2 { font-size: 28px; }
+.site-shell .chat-messages { min-height: 150px; padding: 12px; }
+.site-shell .script-panel { padding: 14px; }
+.site-shell .script-placeholder { min-height: 170px; }
+.site-shell .work-section { padding-bottom: 46px; }
+.site-shell .empty-work { min-width: 240px; padding: 18px; }
+.site-shell .footer { min-height: 54px; gap: 18px; }
+
+.create-shell header strong { font-size: .95rem; }
+.create-shell header { padding-bottom: 16px; }
+.create-shell section { max-width: 100%; }
+.create-shell textarea { min-height: 112px; }
+.create-shell aside > div { padding: 14px; }
+.studio-shell h1 { font-size: 1.8rem; }
+.studio-shell header { padding-block: 10px; }
+.studio-shell section { padding-block: 20px; }
+.studio-shell [class*="min-h-[calc(100vh"] { min-height: calc(100vh - 135px); }
+.studio-shell [class*="min-h-[520px"] { min-height: 440px; }
+.studio-shell [class*="min-h-[580px"] { min-height: 500px; }
+.studio-shell .chat-messages { padding-block: 14px; }
+
+@media (max-width: 768px) {
+  .site-shell .topbar, .site-shell .hero-section, .site-shell .tool-strip, .site-shell .content-section, .site-shell .footer { width: min(100% - 20px, 560px); }
+  .site-shell .topbar { height: 52px; min-height: 52px; }
+  .site-shell .brand { gap: 7px; font-size: 11px; }
+  .site-shell .brand-mark { width: 28px; height: 28px; font-size: 15px; }
+  .site-shell .hero-section { gap: 18px; padding-block: 20px 18px; }
+  .site-shell .hero-copy h1 { font-size: 30px; line-height: 1.12; }
+
+@media (max-width: 768px) {
+  .site-shell .topbar { height: 52px; min-height: 52px; }
+  .site-shell .hero-section { min-height: auto; padding-block: 20px 18px; }
+  .site-shell .hero-copy h1 { font-size: 30px; }
+  .site-shell .hero-art { min-height: 165px; }
+  .site-shell .content-section { padding-top: 26px; }
+  .site-shell .section-heading h2 { font-size: 23px; }
+  .site-shell .chat-messages { min-height: 118px; }
+  .site-shell .script-placeholder { min-height: 140px; }
+  .create-shell h1 { font-size: 1.55rem !important; }
+  .create-shell textarea { min-height: 88px; }
+  .create-shell aside > div { padding: 10px; }
+  .studio-shell h1 { font-size: 1.45rem !important; }
+  .studio-shell [class*="min-h-[520px"], .studio-shell [class*="min-h-[580px"] { min-height: 350px; }
+  main:not(.site-shell) [class*="text-6xl"], main:not(.site-shell) [class*="sm:text-6xl"] { font-size: 1.55rem !important; }
+  main:not(.site-shell) [class*="text-4xl"], main:not(.site-shell) [class*="sm:text-4xl"] { font-size: 1.45rem !important; }
+}
+
+@media (max-width: 480px) {
+  .site-shell .hero-copy h1 { font-size: 27px; }
+  .site-shell .section-heading h2 { font-size: 21px; }
+  .create-shell h1 { font-size: 1.4rem !important; }
+  .studio-shell h1 { font-size: 1.3rem !important; }
+  .studio-shell [class*="min-h-[350px"] { min-height: 320px; }
+}
+  .site-shell .hero-text { max-width: 36rem; margin-block: 9px 13px; font-size: 10px; line-height: 1.7; }
+  .site-shell .hero-actions .button { padding: 8px 11px; font-size: 10px; }
+  .site-shell .hero-meta { gap: 11px; margin-top: 14px; font-size: 8px; }
+  .site-shell .hero-meta b { font-size: 15px; }
+  .site-shell .hero-art { min-height: 165px; }
+  .site-shell .hero-sun { font-size: 64px; }
+  .site-shell .tool-strip { gap: 0; }
+  .site-shell .tool-card { min-height: 50px; padding: 7px; }
+  .site-shell .tool-card b { font-size: 9px; }
+  .site-shell .tool-card small { font-size: 8px; }
+  .site-shell .content-section { gap: 16px; padding-top: 26px; }
+  .site-shell .section-heading h2 { font-size: 23px; }
+  .site-shell .section-heading > p:last-child { font-size: 10px; line-height: 1.65; }
+  .site-shell .chat-messages { min-height: 118px; padding: 10px; }
+  .site-shell .chat-messages p { margin-block: 4px; font-size: 10px; }
+  .site-shell .empty-chat { padding-block: 15px; }
+  .site-shell .empty-chat p, .site-shell .script-placeholder p { margin-block: 5px 3px; font-size: 10px; }
+  .site-shell .chat-input { margin: 0 7px 7px; }
+  .site-shell .chat-input input { padding: 8px; font-size: 10px; }
+  .site-shell .chat-input button { width: 30px; font-size: 14px; }
+  .site-shell .script-panel { padding: 10px; }
+  .site-shell .script-form { gap: 8px; }
+  .site-shell .script-form input, .site-shell .script-form select { padding: 8px; }
+  .site-shell .script-placeholder { min-height: 140px; }
+  .site-shell .empty-work { min-width: 0; margin-top: 12px; padding: 14px; }
+  .site-shell .work-section { padding-bottom: 26px; }
+  .site-shell .footer { min-height: 46px; padding-block: 10px; font-size: 9px; }
+
+  .create-shell > div.relative { padding-inline: 10px !important; }
+  .create-shell header { gap: 8px; padding-block: 8px 10px; }
+  .create-shell header strong { font-size: .78rem; }
+  .create-shell header small { font-size: .5rem; }
+  .create-shell header > div { font-size: 8px; letter-spacing: .1em; }
+  .create-shell section { padding-block: 18px; }
+  .create-shell section > div:first-child { margin-bottom: 16px; }
+  .create-shell h1 { font-size: 1.55rem !important; }
+  .create-shell section p { font-size: .75rem; line-height: 1.7; }
+  .create-shell section > div.grid { gap: 12px; }
+  .create-shell section > div.grid > section { padding: 10px; }
+  .create-shell textarea { min-height: 88px; padding: 10px; font-size: .75rem; line-height: 1.6; }
+  .create-shell fieldset button, .create-shell select { padding: 8px; font-size: .7rem; }
+  .create-shell section button { min-height: 36px; }
+  .create-shell aside { gap: 10px; }
+  .create-shell aside > div { padding: 10px; }
+  .create-shell aside video { max-width: 100%; }
+
+  .studio-shell > div.relative { padding-inline: 10px; }
+  .studio-shell header { padding-block: 8px; }
+  .studio-shell header strong { font-size: .75rem; }
+  .studio-shell header small { font-size: 8px; }
+  .studio-shell h1 { font-size: 1.45rem; }
+  .studio-shell section { padding-block: 14px; }
+  .studio-shell section > div:first-child { margin-bottom: 12px; }
+  .studio-shell [class*="min-h-[calc(100vh"] { min-height: 0; }
+  .studio-shell [class*="min-h-[520px"], .studio-shell [class*="min-h-[580px"] { min-height: 350px; }
+  .studio-shell [class*="text-xs"] { font-size: .68rem; }
+  .studio-shell [class*="text-sm"] { font-size: .75rem; }
+  .studio-shell textarea, .studio-shell input { font-size: .7rem; }
+  .studio-shell form { margin: 8px; }
+  .studio-shell form textarea, .studio-shell form input { padding: 8px; }
+}
+
+@media (max-width: 480px) {
+  .site-shell .topbar, .site-shell .hero-section, .site-shell .tool-strip, .site-shell .content-section, .site-shell .footer { width: calc(100% - 16px); }
+  .site-shell .topbar > .button { padding: 6px 8px; font-size: 9px; }
+  .site-shell .hero-copy h1 { font-size: 27px; }
+  .site-shell .hero-actions .button { padding-inline: 8px; }
+  .site-shell .tool-card { gap: 4px; padding-inline: 5px; }
+  .site-shell .tool-index { font-size: 8px; }
+  .site-shell .section-heading h2 { font-size: 21px; }
+  .site-shell .footer { gap: 5px; }
+  .create-shell header > div { max-width: 42%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .create-shell h1 { font-size: 1.4rem !important; }
+  .studio-shell h1 { font-size: 1.3rem; }
+  .studio-shell [class*="min-h-[350px"] { min-height: 320px; }
+}
+
 @media (max-width: 760px) {
   .topbar, .hero-section, .tool-strip, .content-section, .footer { width: min(100% - 24px, 560px); }
   .topbar { height: 56px; }.desktop-nav { display: none; }.hero-section, .split-section, .script-section { grid-template-columns: 1fr; gap: 22px; }.hero-section { min-height: auto; padding: 26px 0 22px; }.hero-copy h1 { font-size: 36px; }.hero-art { min-height: 190px; }.hero-meta { gap: 14px; flex-wrap: wrap; margin-top: 18px; }.tool-strip { grid-template-columns: 1fr 1fr; }.tool-card { min-height: 56px; padding-block: 8px; }.tool-card:nth-child(odd) { border-left: 0; }.content-section { padding-top: 34px; }.section-heading h2 { font-size: 27px; }.script-form { grid-template-columns: 1fr; }.form-row { grid-template-columns: 1fr; }.script-form .button { width: 100%; }.work-section { display: block; padding-bottom: 34px; }.empty-work { min-width: 0; margin-top: 18px; }.footer { flex-wrap: wrap; gap: 8px; padding: 16px 0; }.footer a { width: 100%; margin: 0; }

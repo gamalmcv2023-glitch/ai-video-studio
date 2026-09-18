@@ -3,8 +3,13 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const modelOptions = ["Seedance", "Kling 2.1", "Runway Gen-4"];
-const durationOptions = ["15 ثانية", "20 ثانية", "25 ثانية", "30 ثانية"];
+const videoTypeOptions = ["Text to Video", "Image to Video"];
+const durationOptions = [
+  { value: 15, label: "15 ثانية" },
+  { value: 20, label: "20 ثانية" },
+  { value: 25, label: "25 ثانية" },
+  { value: 30, label: "30 ثانية" },
+];
 const ratioOptions = [
   { value: "16:9", label: "16:9", hint: "سينمائي" },
   { value: "9:16", label: "9:16", hint: "عمودي" },
@@ -13,8 +18,8 @@ const ratioOptions = [
 
 export default function CreatePage() {
   const [prompt, setPrompt] = useState("");
-  const [model, setModel] = useState("Seedance");
-  const [duration, setDuration] = useState(durationOptions[1]);
+  const [videoType, setVideoType] = useState(videoTypeOptions[0]);
+  const [duration, setDuration] = useState(durationOptions[0].value);
   const [ratio, setRatio] = useState("16:9");
   const [status, setStatus] = useState<"idle" | "processing" | "complete" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -31,7 +36,7 @@ export default function CreatePage() {
       const response = await fetch("/api/generate-video", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: prompt.trim() }),
+        body: JSON.stringify({ prompt: prompt.trim(), duration, aspectRatio: ratio, videoType }),
       });
       const result = await response.json();
 
@@ -77,8 +82,8 @@ export default function CreatePage() {
                   <p className="text-xs uppercase tracking-[0.25em] text-amber-100/50">01 / الاتجاه</p>
                   <h2 className="mt-2 text-xl font-semibold text-white">صِف رؤيتك</h2>
                 </div>
-                <div className="rounded-full border border-white/10 bg-amber-100/10 px-4 py-2 text-xs text-amber-100">
-                  Text to Video
+                <div className="rounded-full border border-amber-200/25 bg-amber-100/10 px-4 py-2 text-xs text-amber-100">
+                  Seedance 2.5
                 </div>
               </div>
 
@@ -86,8 +91,8 @@ export default function CreatePage() {
               <textarea id="prompt" value={prompt} onChange={(event) => setPrompt(event.target.value)} placeholder="مثال: لقطة سينمائية لمدينة مستقبلية بعد المطر، انعكاسات نيون، حركة كاميرا بطيئة..." className="mt-3 min-h-44 w-full resize-y rounded-2xl border border-white/10 bg-black/25 p-5 text-base leading-8 text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/10" />
 
               <div className="mt-8 grid gap-5 sm:grid-cols-3">
-                <label className="text-sm text-slate-300">المحرك<select value={model} onChange={(event) => setModel(event.target.value)} className="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/80 p-3 text-sm text-white outline-none focus:border-amber-200/60">{modelOptions.map((option) => <option key={option}>{option}</option>)}</select></label>
-                <label className="text-sm text-slate-300">مدة العرض<select value={duration} onChange={(event) => setDuration(event.target.value)} className="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/80 p-3 text-sm text-white outline-none focus:border-amber-200/60">{durationOptions.map((option) => <option key={option}>{option}</option>)}</select></label>
+                <fieldset><legend className="text-sm text-slate-300">نوع الفيديو</legend><div className="mt-2 grid grid-cols-2 gap-2">{videoTypeOptions.map((option) => <button key={option} type="button" onClick={() => setVideoType(option)} className={`rounded-xl border p-3 text-center text-xs transition ${videoType === option ? "border-amber-200 bg-amber-100/15 text-amber-50" : "border-white/10 text-slate-400 hover:border-white/30"}`}>{option}</button>)}</div></fieldset>
+                <label className="text-sm text-slate-300">مدة الفيديو<select value={duration} onChange={(event) => setDuration(Number(event.target.value))} className="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/80 p-3 text-sm text-white outline-none focus:border-amber-200/60">{durationOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
                 <fieldset><legend className="text-sm text-slate-300">نسبة العرض</legend><div className="mt-2 grid grid-cols-3 gap-2">{ratioOptions.map((option) => <button key={option.value} type="button" onClick={() => setRatio(option.value)} className={`rounded-xl border p-2 text-center transition ${ratio === option.value ? "border-amber-200 bg-amber-100/15 text-amber-50" : "border-white/10 text-slate-400 hover:border-white/30"}`}><span className="block text-xs font-semibold">{option.label}</span><span className="mt-1 block text-[10px]">{option.hint}</span></button>)}</div></fieldset>
               </div>
 
@@ -107,7 +112,7 @@ export default function CreatePage() {
                   {status === "processing" && <div className="absolute inset-x-0 top-0 h-1 animate-pulse bg-amber-200 shadow-[0_0_20px_#fde68a]" />}
                   {!videoUrl && <div className="absolute inset-x-4 bottom-4"><p className="text-[10px] uppercase tracking-[0.25em] text-white/60">{status === "processing" ? "Generating" : "مساحتك"}</p><p className="mt-1 truncate text-sm font-semibold text-white">{prompt || "ابدأ بكتابة فكرة المشهد"}</p></div>}
                 </div>
-                <div className="mt-5 grid grid-cols-2 gap-3 text-xs text-slate-400"><span>المحرك <strong className="block pt-1 text-white">{model}</strong></span><span>المدة <strong className="block pt-1 text-white">{duration}</strong></span><span>النسبة <strong className="block pt-1 text-white">{ratio}</strong></span><span>Engine <strong className="block pt-1 text-emerald-200">Seedance 2.5</strong></span></div>
+                <div className="mt-5 grid grid-cols-2 gap-3 text-xs text-slate-400"><span>النموذج <strong className="block pt-1 text-white">Seedance 2.5</strong></span><span>النوع <strong className="block pt-1 text-white">{videoType}</strong></span><span>المدة <strong className="block pt-1 text-white">{duration} ثانية</strong></span><span>النسبة <strong className="block pt-1 text-white">{ratio}</strong></span></div>
               </div>
               <div className="rounded-2xl border border-amber-100/10 bg-amber-100/[0.04] p-5 text-sm leading-7 text-slate-400"><span className="mb-2 block text-amber-100">ملاحظة الاستوديو</span>التوليد يتم عبر Vercel AI Gateway. يبقى مفتاح API على الخادم ولا يظهر في الواجهة.</div>
             </aside>

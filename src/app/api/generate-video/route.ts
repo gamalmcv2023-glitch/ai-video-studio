@@ -2,6 +2,9 @@ import { createGateway, experimental_generateVideo as generateVideo } from "ai";
 
 export const maxDuration = 300;
 
+const allowedDurations = new Set([15, 20, 25, 30]);
+const allowedAspectRatios = new Set(["16:9", "9:16", "1:1"]);
+
 export async function POST(request: Request) {
   if (!process.env.AI_GATEWAY_API_KEY) {
     return Response.json(
@@ -13,18 +16,24 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const prompt = typeof body.prompt === "string" ? body.prompt.trim() : "";
+    const duration = typeof body.duration === "number" ? body.duration : 15;
+    const aspectRatio = typeof body.aspectRatio === "string" ? body.aspectRatio : "16:9";
 
     if (!prompt) {
       return Response.json({ error: "أدخل وصفًا للمشهد أولًا." }, { status: 400 });
+    }
+
+    if (!allowedDurations.has(duration) || !allowedAspectRatios.has(aspectRatio)) {
+      return Response.json({ error: "إعدادات الفيديو غير مدعومة." }, { status: 400 });
     }
 
     const gateway = createGateway({ apiKey: process.env.AI_GATEWAY_API_KEY });
     const result = await generateVideo({
       model: gateway.video("bytedance/seedance-2.5"),
       prompt,
-      aspectRatio: "16:9",
-      resolution: "1280x720",
-      duration: 5,
+      aspectRatio,
+      resolution: aspectRatio === "16:9" ? "1280x720" : aspectRatio === "9:16" ? "720x1280" : "720x720",
+      duration,
     });
 
     const video = result.videos[0];

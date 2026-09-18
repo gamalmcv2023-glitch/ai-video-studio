@@ -19,22 +19,28 @@ export async function POST(request: Request) {
     }
 
     const gateway = createGateway({ apiKey: process.env.AI_GATEWAY_API_KEY });
-    const { video } = await generateVideo({
+    const result = await generateVideo({
       model: gateway.video("bytedance/seedance-2.5"),
       prompt,
       aspectRatio: "16:9",
-      duration: 10,
+      resolution: "1280x720",
+      duration: 5,
     });
+
+    const video = result.videos[0];
+    if (!video) {
+      throw new Error("لم يُرجع مزود الفيديو أي ملف فيديو.");
+    }
 
     return Response.json({
       video: {
-        data: video.base64,
+        data: Buffer.from(video.uint8Array).toString("base64"),
         mediaType: video.mediaType,
       },
     });
   } catch (error) {
     console.error("Video generation failed", error);
-    const message = error instanceof Error ? error.message : "تعذر إنشاء الفيديو.";
+    const message = error instanceof Error ? error.message : "حدث خطأ غير متوقع أثناء إنشاء الفيديو.";
     return Response.json({ error: message }, { status: 502 });
   }
 }

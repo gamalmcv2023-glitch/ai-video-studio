@@ -39,6 +39,27 @@ export default function ScriptStudioPage() {
   const [duration, setDuration] = useState(durations[1]);
   const [detail, setDetail] = useState(detailLevels[1]);
   const [script, setScript] = useState<ScriptScene[] | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  function formatScript(scenes: ScriptScene[]) {
+    return scenes.map((scene, index) => [
+      `المشهد ${String(index + 1).padStart(2, "0")} | ${scene.time}`,
+      `وصف المشهد: ${scene.description}`,
+      `حركة الكاميرا: ${scene.camera}`,
+      `حركة العناصر والشخصيات: ${scene.motion}`,
+      `الحوار أو التعليق الصوتي: ${scene.dialogue}`,
+      `المؤثرات الصوتية: ${scene.sound}`,
+      `الموسيقى: ${scene.music}`,
+      `الانتقال للمشهد التالي: ${scene.transition}`,
+    ].join("\n")).join("\n\n");
+  }
+
+  async function copyScript() {
+    if (!script) return;
+    await navigator.clipboard.writeText(formatScript(script));
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2200);
+  }
 
   function createScript(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -50,6 +71,7 @@ export default function ScriptStudioPage() {
       { time: "00:05 - 00:12", description: `لقطات تفصيلية تبرز ملمس ${subject} وروحه البصرية.`, camera: "دوران نصف دائري حول العنصر الرئيسي.", motion: "تتحرك التفاصيل بانسيابية مع إيقاع المشهد.", dialogue: `${subject}، بصياغة تترك أثرًا.`, sound: "نقرة انتقالية ولمسات صوتية دقيقة.", music: "تصاعد موسيقي خفيف يحافظ على التركيز.", transition: "قطع ناعم على حركة العنصر." },
       { time: `00:12 - ${duration === "15 ثانية" ? "00:15" : "00:20"}`, description: "لقطة ختامية مركزة تجمع الهوية والرسالة في إطار واحد.", camera: "تثبيت تدريجي مع ارتفاع بسيط في زاوية الرؤية.", motion: "تستقر العناصر في تكوين متوازن مع ظهور الرسالة.", dialogue: "فكرة تستحق أن تُرى.", sound: "نغمة ختامية قصيرة وواضحة.", music: "هبوط موسيقي دافئ مع صدى خفيف.", transition: "انتقال إلى الشعار ثم إظلام تدريجي." },
     ]);
+    setCopied(false);
   }
 
   return (
@@ -85,7 +107,7 @@ export default function ScriptStudioPage() {
           </form>
 
           <section className="mt-5 border border-white/10 bg-[#151516]/70" aria-live="polite">
-            <div className="flex items-center justify-between border-b border-white/10 px-4 py-3"><h2 className="text-sm font-semibold text-[#ead39e]">نموذج Script التجريبي</h2><span className="text-[9px] text-white/35">02 / المشاهد</span></div>
+            <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3"><h2 className="text-sm font-semibold text-[#ead39e]">نموذج Script التجريبي</h2>{script ? <div className="flex items-center gap-2"><button type="button" onClick={copyScript} className="border border-[#c6a56a]/45 bg-[#c6a56a]/10 px-2.5 py-1.5 text-[10px] text-[#e8d19a] transition hover:bg-[#c6a56a]/20">نسخ الـScript</button>{copied && <span className="text-[9px] text-emerald-300">تم نسخ الـScript ✓</span>}</div> : <span className="text-[9px] text-white/35">02 / المشاهد</span>}</div>
             {script ? <div className="space-y-3 p-3 sm:p-4">{script.map((scene, index) => <article key={scene.time} className="border border-white/10 bg-[#0f0f10] p-3"><div className="mb-3 flex items-center justify-between border-b border-white/10 pb-2"><h3 className="text-xs font-semibold text-[#c6a56a]">المشهد {String(index + 1).padStart(2, "0")}</h3><span className="text-[10px] text-white/45">{scene.time}</span></div><dl className="grid gap-x-4 gap-y-2 text-[10px] leading-6 sm:grid-cols-2"><div><dt className="text-white/35">وصف المشهد</dt><dd className="text-white/70">{scene.description}</dd></div><div><dt className="text-white/35">حركة الكاميرا</dt><dd className="text-white/70">{scene.camera}</dd></div><div><dt className="text-white/35">حركة العناصر والشخصيات</dt><dd className="text-white/70">{scene.motion}</dd></div><div><dt className="text-white/35">الحوار أو التعليق الصوتي</dt><dd className="text-white/70">{scene.dialogue}</dd></div><div><dt className="text-white/35">المؤثرات الصوتية</dt><dd className="text-white/70">{scene.sound}</dd></div><div><dt className="text-white/35">الموسيقى</dt><dd className="text-white/70">{scene.music}</dd></div><div className="sm:col-span-2"><dt className="text-white/35">الانتقال للمشهد التالي</dt><dd className="text-white/70">{scene.transition}</dd></div></dl></article>)}</div> : <div className="grid min-h-48 place-content-center px-5 text-center"><span className="text-2xl text-[#c6a56a]">✧</span><p className="mt-2 text-xs text-white/65">سيظهر السكريبت المنظم هنا</p><small className="mt-1 text-[10px] text-white/35">أدخل فكرة الفيديو لبدء النموذج التجريبي</small></div>}
           </section>
         </section>

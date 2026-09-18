@@ -49,7 +49,7 @@ export default function Home() {
             <a href="#pricing" className="transition hover:text-white">الأسعار</a>
           </nav>
 
-          <Link href="/create" className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">
+          <Link href="/create" className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-5 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-200 touch-manipulation">
             ابدأ الآن
           </Link>
         </header>
@@ -70,12 +70,12 @@ export default function Home() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link href="/create" className="rounded-full bg-gradient-to-r from-violet-500 to-cyan-400 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-cyan-500/30 transition hover:scale-[1.02]">
+              <Link href="/create" className="inline-flex min-h-11 items-center justify-center rounded-full bg-gradient-to-r from-violet-500 to-cyan-400 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-cyan-500/30 transition hover:scale-[1.02] touch-manipulation">
                 جرّب الآن
               </Link>
-              <a href="#demo" className="rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10">
+              <Link href="#demo" className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10 touch-manipulation">
                 شاهد العرض
-              </a>
+              </Link>
             </div>
 
             <div className="mt-10 flex flex-wrap gap-8 text-sm text-slate-300">
@@ -131,7 +131,7 @@ export default function Home() {
                 <p className="text-sm font-semibold tracking-[0.25em] text-cyan-300">DEMO</p>
                 <h2 className="mt-4 text-3xl font-black text-white sm:text-4xl">شاهد الفكرة وهي تتحول إلى مشهد.</h2>
                 <p className="mt-5 leading-8 text-slate-300">اكتب وصفًا واحدًا، اختر أسلوبك، واترك الاستوديو يبني لك مسودة فيديو جاهزة للمراجعة.</p>
-                <Link href="/create" className="mt-7 inline-flex rounded-full border border-cyan-300/40 bg-cyan-300/10 px-5 py-3 text-sm font-bold text-cyan-100 transition hover:bg-cyan-300/20">
+                <Link href="/create" className="mt-7 inline-flex min-h-11 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-300/10 px-5 py-3 text-sm font-bold text-cyan-100 transition hover:bg-cyan-300/20 touch-manipulation">
                   افتح الاستوديو
                 </Link>
               </div>

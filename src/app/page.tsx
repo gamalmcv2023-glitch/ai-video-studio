@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const features = [
   {
     title: "إنشاء سيناريوهات ذكية",
@@ -47,9 +49,9 @@ export default function Home() {
             <a href="#pricing" className="transition hover:text-white">الأسعار</a>
           </nav>
 
-          <button className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">
+          <Link href="/create" className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">
             ابدأ الآن
-          </button>
+          </Link>
         </header>
 
         <section className="grid items-center gap-10 pb-20 pt-8 lg:grid-cols-[1.2fr_0.8fr]">
@@ -68,12 +70,12 @@ export default function Home() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <button className="rounded-full bg-gradient-to-r from-violet-500 to-cyan-400 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-cyan-500/30 transition hover:scale-[1.02]">
+              <Link href="/create" className="rounded-full bg-gradient-to-r from-violet-500 to-cyan-400 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-cyan-500/30 transition hover:scale-[1.02]">
                 جرّب الآن
-              </button>
-              <button className="rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10">
+              </Link>
+              <a href="#demo" className="rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10">
                 شاهد العرض
-              </button>
+              </a>
             </div>
 
             <div className="mt-10 flex flex-wrap gap-8 text-sm text-slate-300">
@@ -116,6 +118,31 @@ export default function Home() {
                       <div className="h-16 rounded-xl bg-white/10" />
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="demo" className="scroll-mt-8 py-16">
+          <div className="overflow-hidden rounded-[2rem] border border-cyan-300/20 bg-gradient-to-br from-cyan-300/10 via-slate-950/80 to-violet-500/10 p-8 shadow-2xl shadow-cyan-950/20 sm:p-12">
+            <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+              <div>
+                <p className="text-sm font-semibold tracking-[0.25em] text-cyan-300">DEMO</p>
+                <h2 className="mt-4 text-3xl font-black text-white sm:text-4xl">شاهد الفكرة وهي تتحول إلى مشهد.</h2>
+                <p className="mt-5 leading-8 text-slate-300">اكتب وصفًا واحدًا، اختر أسلوبك، واترك الاستوديو يبني لك مسودة فيديو جاهزة للمراجعة.</p>
+                <Link href="/create" className="mt-7 inline-flex rounded-full border border-cyan-300/40 bg-cyan-300/10 px-5 py-3 text-sm font-bold text-cyan-100 transition hover:bg-cyan-300/20">
+                  افتح الاستوديو
+                </Link>
+              </div>
+              <div className="relative aspect-video overflow-hidden rounded-3xl border border-white/10 bg-slate-950 p-4">
+                <div className="absolute inset-4 rounded-2xl bg-[radial-gradient(circle_at_65%_35%,rgba(34,211,238,0.7),transparent_18%),radial-gradient(circle_at_35%_65%,rgba(168,85,247,0.75),transparent_28%),linear-gradient(135deg,#111827,#020617)]" />
+                <div className="relative flex h-full items-end justify-between rounded-2xl border border-white/10 p-5">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-cyan-200">Preview / 00:12</p>
+                    <p className="mt-2 text-lg font-bold text-white">A new story begins</p>
+                  </div>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/15 text-white">▶</div>
                 </div>
               </div>
             </div>

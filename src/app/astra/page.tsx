@@ -35,7 +35,7 @@ export default function AstraPage() {
   }
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#0b0b0c] text-[#f4f0e7]">
+    <main className="studio-shell min-h-screen overflow-hidden bg-[#0b0b0c] text-[#f4f0e7]">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_78%_12%,rgba(198,165,106,0.12),transparent_24%),radial-gradient(circle_at_15%_82%,rgba(43,93,112,0.11),transparent_28%)]" />
       <div className="relative mx-auto flex min-h-screen w-full min-w-0 max-w-4xl flex-col px-3 py-3 sm:px-8 sm:py-7">
         <div className="h-px w-full bg-gradient-to-l from-transparent via-[#c6a56a]/70 to-transparent" />

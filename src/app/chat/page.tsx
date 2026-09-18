@@ -61,7 +61,7 @@ export default function ChatPage() {
 
   function selectConversation(title: string) {
     setActiveConversation(title);
-    setMessages([{ ...welcomeMessage, id: Date.now(), content: `مرحبًا مجددًا.\n\nنستكمل هنا مساحة **${title}**. ما الخطوة التالية؟` }]);
+    setMessages([{ ...welcomeMessage, id: 2, content: `مرحبًا مجددًا.\n\nنستكمل هنا مساحة **${title}**. ما الخطوة التالية؟` }]);
     setIsThinking(false);
   }
 
@@ -90,7 +90,7 @@ export default function ChatPage() {
   }
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#0a0a0b] text-[#f4f0e7]">
+    <main className="studio-shell min-h-screen overflow-hidden bg-[#0a0a0b] text-[#f4f0e7]">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_78%_8%,rgba(198,165,106,0.13),transparent_24%),radial-gradient(circle_at_18%_82%,rgba(38,86,107,0.12),transparent_29%)]" />
       <div className="relative mx-auto flex min-h-screen w-full min-w-0 max-w-7xl flex-col px-3 py-3 sm:px-6 sm:py-5">
         <div className="h-px bg-gradient-to-l from-transparent via-[#c6a56a]/80 to-transparent" />

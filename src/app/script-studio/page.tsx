@@ -75,7 +75,7 @@ export default function ScriptStudioPage() {
   }
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#0b0b0c] text-[#f4f0e7]">
+    <main className="studio-shell min-h-screen overflow-hidden bg-[#0b0b0c] text-[#f4f0e7]">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(198,165,106,0.11),transparent_24%),radial-gradient(circle_at_14%_80%,rgba(49,91,105,0.1),transparent_28%)]" />
       <div className="relative mx-auto flex min-h-screen w-full min-w-0 max-w-5xl flex-col px-3 py-3 sm:px-8 sm:py-7">
         <div className="h-px w-full bg-gradient-to-l from-transparent via-[#c6a56a]/70 to-transparent" />

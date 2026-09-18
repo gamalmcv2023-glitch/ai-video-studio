@@ -1,6 +1,6 @@
 import { createGateway, experimental_generateVideo as generateVideo } from "ai";
 
-export const maxDuration = 600;
+export const maxDuration = 300;
 
 export async function POST(request: Request) {
   if (!process.env.AI_GATEWAY_API_KEY) {

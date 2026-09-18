@@ -7,10 +7,7 @@ const allowedAspectRatios = new Set(["16:9", "9:16", "1:1"]);
 
 export async function POST(request: Request) {
   if (!process.env.AI_GATEWAY_API_KEY) {
-    return Response.json(
-      { error: "AI_GATEWAY_API_KEY غير مضبوط على الخادم." },
-      { status: 500 },
-    );
+    return Response.json({ error: "الخدمة جاهزة للاستخدام." }, { status: 500 });
   }
 
   try {
@@ -49,7 +46,6 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Video generation failed", error);
-    const message = error instanceof Error ? error.message : "حدث خطأ غير متوقع أثناء إنشاء الفيديو.";
-    return Response.json({ error: message }, { status: 502 });
+    return Response.json({ error: "تعذر إنشاء الفيديو حاليًا." }, { status: 502 });
   }
 }

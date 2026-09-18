@@ -77,9 +77,9 @@ export default function ScriptStudioPage() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#0b0b0c] text-[#f4f0e7]">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(198,165,106,0.11),transparent_24%),radial-gradient(circle_at_14%_80%,rgba(49,91,105,0.1),transparent_28%)]" />
-      <div className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col px-4 py-4 sm:px-8 sm:py-7">
+      <div className="relative mx-auto flex min-h-screen w-full min-w-0 max-w-5xl flex-col px-3 py-3 sm:px-8 sm:py-7">
         <div className="h-px w-full bg-gradient-to-l from-transparent via-[#c6a56a]/70 to-transparent" />
-        <header className="flex items-center justify-between border-b border-white/10 py-4">
+        <header className="flex min-w-0 items-center justify-between gap-3 border-b border-white/10 py-4">
           <Link href="/" className="flex items-center gap-2.5" aria-label="العودة إلى منصة الشرقاوي">
             <span className="grid h-8 w-8 place-items-center border border-[#c6a56a] font-serif text-lg text-[#c6a56a]">ش</span>
             <span><strong className="block text-sm">منصة الشرقاوي</strong><small className="block text-[9px] text-white/45">استوديو الإبداع الذكي</small></span>
@@ -87,13 +87,13 @@ export default function ScriptStudioPage() {
           <Link href="/" className="text-xs text-[#c6a56a] transition hover:text-[#f4f0e7]">العودة للرئيسية ↗</Link>
         </header>
 
-        <section className="mx-auto w-full max-w-4xl flex-1 py-7 sm:py-10">
+        <section className="mx-auto w-full min-w-0 max-w-4xl flex-1 py-6 sm:py-10">
           <div className="mb-5 flex items-end justify-between gap-4">
             <div><p className="mb-2 text-[10px] uppercase tracking-[0.28em] text-[#c6a56a]">استوديو Script · 04</p><h1 className="font-serif text-3xl font-normal sm:text-4xl">استوديو Script <em className="not-italic text-[#c6a56a]">للفيديو</em></h1></div>
             <span className="mb-1 hidden border border-[#c6a56a]/20 bg-[#c6a56a]/5 px-2.5 py-1.5 text-[9px] text-white/50 sm:block">واجهة تجريبية · بدون API</span>
           </div>
 
-          <form onSubmit={createScript} className="border border-white/10 bg-[#151516]/85 p-4 shadow-2xl shadow-black/25 sm:p-5">
+          <form onSubmit={createScript} className="min-w-0 border border-white/10 bg-[#151516]/85 p-3 shadow-2xl shadow-black/25 sm:p-5">
             <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-3"><h2 className="text-sm font-semibold text-[#ead39e]">إعدادات السكريبت</h2><span className="text-[9px] text-white/35">01 / الاتجاه</span></div>
             <label className="block text-[10px] text-white/55" htmlFor="video-idea">فكرة الفيديو<input id="video-idea" value={idea} onChange={(event) => setIdea(event.target.value)} placeholder="مثال: إطلاق عطر شرقي فاخر في مدينة ليلية" className="mt-1.5 w-full border border-white/10 bg-[#101011] px-3 py-3 text-xs text-white outline-none transition placeholder:text-white/25 focus:border-[#c6a56a]/70" /></label>
             <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

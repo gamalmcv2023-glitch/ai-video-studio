@@ -37,9 +37,9 @@ export default function AstraPage() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#0b0b0c] text-[#f4f0e7]">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_78%_12%,rgba(198,165,106,0.12),transparent_24%),radial-gradient(circle_at_15%_82%,rgba(43,93,112,0.11),transparent_28%)]" />
-      <div className="relative mx-auto flex min-h-screen w-full max-w-4xl flex-col px-4 py-4 sm:px-8 sm:py-7">
+      <div className="relative mx-auto flex min-h-screen w-full min-w-0 max-w-4xl flex-col px-3 py-3 sm:px-8 sm:py-7">
         <div className="h-px w-full bg-gradient-to-l from-transparent via-[#c6a56a]/70 to-transparent" />
-        <header className="flex items-center justify-between border-b border-white/10 py-4">
+        <header className="flex min-w-0 items-center justify-between gap-3 border-b border-white/10 py-4">
           <Link href="/" className="flex items-center gap-2.5" aria-label="العودة إلى منصة الشرقاوي">
             <span className="grid h-8 w-8 place-items-center border border-[#c6a56a] font-serif text-lg text-[#c6a56a]">ش</span>
             <span>
@@ -50,7 +50,7 @@ export default function AstraPage() {
           <Link href="/" className="text-xs text-[#c6a56a] transition hover:text-[#f4f0e7]">العودة للرئيسية ↗</Link>
         </header>
 
-        <section className="mx-auto flex w-full max-w-2xl flex-1 flex-col py-7 sm:py-10">
+        <section className="mx-auto flex w-full min-w-0 max-w-2xl flex-1 flex-col py-6 sm:py-10">
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
               <p className="mb-2 text-[10px] uppercase tracking-[0.28em] text-[#c6a56a]">شات جي بي تي · 03</p>
@@ -59,7 +59,7 @@ export default function AstraPage() {
             <span className="mb-1 flex items-center gap-2 border border-[#c6a56a]/20 bg-[#c6a56a]/5 px-2.5 py-1.5 text-[9px] text-white/55"><i className="h-1.5 w-1.5 rounded-full bg-emerald-300 shadow-[0_0_8px_#86efac]" /> متاحة للتجربة</span>
           </div>
 
-          <section className="flex min-h-[480px] flex-1 flex-col border border-white/10 bg-[#151516]/80 shadow-2xl shadow-black/30 backdrop-blur-sm" aria-label="محادثة أسترا">
+          <section className="flex min-h-[440px] min-w-0 flex-1 flex-col border border-white/10 bg-[#151516]/80 shadow-2xl shadow-black/30 backdrop-blur-sm sm:min-h-[480px]" aria-label="محادثة أسترا">
             <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 text-[10px] text-white/55 sm:px-5">
               <span className="text-[#d8c292]">أسترا</span>
               <span>واجهة تجريبية · بدون اتصال API</span>

@@ -20,14 +20,14 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-geist-sans), Arial, sans-serif; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { margin: 0; min-width: 0; overflow-x: hidden; background: var(--background); color: var(--foreground); font-family: var(--font-geist-sans), Arial, sans-serif; }
 button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
 a { color: inherit; text-decoration: none; }
 
 .site-shell { display: flex; flex-direction: column; min-height: 100vh; overflow: hidden; background: radial-gradient(circle at 78% 8%, rgba(168,121,255,.14), transparent 22%), radial-gradient(circle at 12% 56%, rgba(69,111,232,.12), transparent 27%), linear-gradient(145deg, #0b1534 0%, #070d20 58%, #09162a 100%); }
 .laser-line { order: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(168,121,255,.9), rgba(110,215,233,.65), transparent); opacity: .8; }
-.topbar, .hero-section, .tool-strip, .content-section, .footer { width: min(1120px, calc(100% - 32px)); margin-inline: auto; }
+.topbar, .hero-section, .tool-strip, .content-section, .footer { width: min(1120px, calc(100% - 32px)); max-width: 100%; margin-inline: auto; }
 .topbar { order: 2; height: 62px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
 .brand { display: flex; gap: 8px; align-items: center; font-size: 13px; }
 .brand strong, .brand small { display: block; }.brand small { color: var(--muted); font-size: 9px; margin-top: 3px; }
@@ -58,10 +58,34 @@ a { color: inherit; text-decoration: none; }
 .studio-shell button[class*="bg-[#c6a56a"], .create-shell button[class*="bg-[#c6a56a"], .studio-shell button[class*="bg-amber"], .create-shell button[class*="bg-amber"] { background: linear-gradient(135deg, var(--royal), #5d43c8); color: #fff; }
 .studio-shell input, .studio-shell textarea, .studio-shell select, .create-shell input, .create-shell textarea, .create-shell select { border-color: var(--line); background-color: rgba(6, 14, 37, .72); color: var(--foreground); }
 .studio-shell [class*="shadow"], .create-shell [class*="shadow"] { box-shadow: 0 14px 34px rgba(2, 7, 25, .28); }
+.studio-shell h1, .studio-shell h2, .studio-shell p, .create-shell h1, .create-shell h2, .create-shell p { overflow-wrap: anywhere; }
+.studio-shell input, .studio-shell textarea, .studio-shell select, .create-shell input, .create-shell textarea, .create-shell select { max-width: 100%; }
 .create-shell section.py-12 { padding: 34px 0; }.create-shell section.py-12 > div.mb-10 { margin-bottom: 26px; }.create-shell textarea { min-height: 132px; padding: 13px; font-size: 13px; line-height: 1.8; }.create-shell .grid.gap-6 { gap: 18px; }.create-shell .grid.gap-6 > section, .create-shell aside > div { padding: 16px; }.create-shell .mt-9 { margin-top: 22px; }.create-shell aside { gap: 18px; }
 
 @media (max-width: 760px) {
   .topbar, .hero-section, .tool-strip, .content-section, .footer { width: min(100% - 24px, 560px); }
   .topbar { height: 58px; }.desktop-nav { display: none; }.hero-section, .split-section, .script-section { grid-template-columns: 1fr; gap: 32px; }.hero-section { min-height: auto; padding: 36px 0 30px; }.hero-copy h1 { font-size: 42px; }.hero-art { min-height: 235px; }.hero-meta { gap: 15px; flex-wrap: wrap; }.tool-strip { grid-template-columns: 1fr 1fr; }.tool-card { min-height: 62px; }.tool-card:nth-child(odd) { border-left: 0; }.content-section { padding-top: 52px; }.section-heading h2 { font-size: 32px; }.script-form { grid-template-columns: 1fr; }.form-row { grid-template-columns: 1fr; }.script-form .button { width: 100%; }.work-section { display: block; padding-bottom: 48px; }.empty-work { min-width: 0; margin-top: 24px; }.footer { flex-wrap: wrap; gap: 10px; padding: 18px 0; }.footer a { width: 100%; margin: 0; }
   .studio-shell > div.relative, .create-shell > div.relative { padding: 12px; }.studio-shell section, .create-shell section { padding-top: 26px; padding-bottom: 26px; }.create-shell section.py-12 { padding: 26px 0; }.create-shell h1 { font-size: 32px !important; }.create-shell .grid.gap-6 > section, .create-shell aside > div { padding: 13px; }.studio-shell [class*="min-h-["], .create-shell [class*="min-h-["] { min-height: 410px; }
+}
+
+@media (max-width: 480px) {
+  .topbar, .hero-section, .tool-strip, .content-section, .footer { width: calc(100% - 24px); }
+  .brand { min-width: 0; font-size: 12px; }
+  .brand > span:last-child { min-width: 0; }
+  .brand small { font-size: 8px; }
+  .topbar > .button { flex: 0 0 auto; padding: 6px 8px; font-size: 9px; }
+  .hero-copy h1 { font-size: 34px; }
+  .hero-text { font-size: 11px; }
+  .hero-actions .button { flex: 1 1 auto; padding: 8px 10px; font-size: 10px; }
+  .tool-card { min-width: 0; gap: 6px; padding-inline: 8px; }
+  .tool-card b { font-size: 9px; }
+  .tool-card small { font-size: 8px; }
+  .script-panel { padding: 11px; }
+  .script-form input, .script-form select { padding: 8px; }
+  .studio-shell header, .create-shell header { min-width: 0; }
+  .studio-shell header > a, .create-shell header > a { min-width: 0; }
+  .studio-shell header > a > span:last-child, .create-shell header > a > span:last-child { min-width: 0; }
+  .studio-shell header > a strong, .create-shell header > a strong { font-size: 13px; }
+  .studio-shell header > a small, .create-shell header > a small { font-size: 8px; }
+  .studio-shell h1, .create-shell h1 { overflow-wrap: anywhere; }
 }

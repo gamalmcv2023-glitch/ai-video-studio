@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useState } from "react";
 
 const modelOptions = ["Seedance", "Kling 2.1", "Runway Gen-4"];
 const durationOptions = ["5 ثوانٍ", "10 ثوانٍ", "15 ثانية"];
@@ -12,34 +12,39 @@ const ratioOptions = [
 ];
 
 export default function CreatePage() {
-  const [mode, setMode] = useState("Text to Video");
   const [prompt, setPrompt] = useState("");
   const [model, setModel] = useState("Seedance");
   const [duration, setDuration] = useState(durationOptions[1]);
   const [ratio, setRatio] = useState("16:9");
-  const [imagePreview, setImagePreview] = useState("");
-  const [status, setStatus] = useState<"idle" | "processing" | "complete">("idle");
+  const [status, setStatus] = useState<"idle" | "processing" | "complete" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
 
-  useEffect(() => {
-    if (status !== "processing") return;
-    const timer = window.setTimeout(() => setStatus("complete"), 2600);
-    return () => window.clearTimeout(timer);
-  }, [status]);
+  async function handleSubmit() {
+    if (!prompt.trim()) return;
 
-  useEffect(() => {
-    return () => {
-      if (imagePreview) URL.revokeObjectURL(imagePreview);
-    };
-  }, [imagePreview]);
-
-  function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (file) setImagePreview(URL.createObjectURL(file));
-  }
-
-  function handleSubmit() {
-    if (!prompt.trim() && !imagePreview) return;
     setStatus("processing");
+    setErrorMessage("");
+    setVideoUrl("");
+
+    try {
+      const response = await fetch("/api/generate-video", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: prompt.trim() }),
+      });
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "تعذر إنشاء الفيديو.");
+      }
+
+      setVideoUrl(`data:${result.video.mediaType};base64,${result.video.data}`);
+      setStatus("complete");
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : "تعذر إنشاء الفيديو.");
+      setStatus("error");
+    }
   }
 
   return (
@@ -72,26 +77,13 @@ export default function CreatePage() {
                   <p className="text-xs uppercase tracking-[0.25em] text-amber-100/50">01 / Direction</p>
                   <h2 className="mt-2 text-xl font-semibold text-white">صِف رؤيتك</h2>
                 </div>
-                <div className="flex rounded-full border border-white/10 bg-black/20 p-1 text-xs">
-                  {["Text to Video", "Image to Video"].map((option) => (
-                    <button key={option} type="button" onClick={() => setMode(option)} className={`rounded-full px-4 py-2 transition ${mode === option ? "bg-amber-100 text-slate-950" : "text-slate-300 hover:text-white"}`}>
-                      {option}
-                    </button>
-                  ))}
+                <div className="rounded-full border border-white/10 bg-amber-100/10 px-4 py-2 text-xs text-amber-100">
+                  Text to Video
                 </div>
               </div>
 
               <label className="block text-sm font-medium text-amber-50" htmlFor="prompt">Prompt</label>
               <textarea id="prompt" value={prompt} onChange={(event) => setPrompt(event.target.value)} placeholder="مثال: لقطة سينمائية لمدينة مستقبلية بعد المطر، انعكاسات نيون، حركة كاميرا بطيئة..." className="mt-3 min-h-44 w-full resize-y rounded-2xl border border-white/10 bg-black/25 p-5 text-base leading-8 text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/10" />
-
-              {mode === "Image to Video" && (
-                <label className="mt-4 flex cursor-pointer items-center gap-4 rounded-2xl border border-dashed border-cyan-200/30 bg-cyan-200/[0.04] p-4 transition hover:border-cyan-200/60">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-200/10 text-xl text-cyan-200">＋</span>
-                  <span className="flex-1"><span className="block text-sm font-semibold text-white">أضف صورة مرجعية</span><span className="mt-1 block text-xs text-slate-400">PNG أو JPG حتى 10MB</span></span>
-                  {imagePreview && <img src={imagePreview} alt="معاينة الصورة المرجعية" className="h-14 w-20 rounded-lg object-cover" />}
-                  <input type="file" accept="image/png,image/jpeg" onChange={handleImageChange} className="sr-only" />
-                </label>
-              )}
 
               <div className="mt-8 grid gap-5 sm:grid-cols-3">
                 <label className="text-sm text-slate-300">Model<select value={model} onChange={(event) => setModel(event.target.value)} className="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/80 p-3 text-sm text-white outline-none focus:border-cyan-300/60">{modelOptions.map((option) => <option key={option}>{option}</option>)}</select></label>
@@ -99,23 +91,25 @@ export default function CreatePage() {
                 <fieldset><legend className="text-sm text-slate-300">Aspect Ratio</legend><div className="mt-2 grid grid-cols-3 gap-2">{ratioOptions.map((option) => <button key={option.value} type="button" onClick={() => setRatio(option.value)} className={`rounded-xl border p-2 text-center transition ${ratio === option.value ? "border-amber-200 bg-amber-100/15 text-amber-50" : "border-white/10 text-slate-400 hover:border-white/30"}`}><span className="block text-xs font-semibold">{option.label}</span><span className="mt-1 block text-[10px]">{option.hint}</span></button>)}</div></fieldset>
               </div>
 
-              <button type="button" onClick={handleSubmit} disabled={status === "processing" || (!prompt.trim() && !imagePreview)} className="mt-9 flex w-full items-center justify-center gap-3 rounded-xl border border-amber-100/30 bg-gradient-to-r from-amber-100 to-amber-300 px-6 py-4 font-bold text-slate-950 shadow-lg shadow-amber-200/10 transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50">
-                {status === "processing" ? "جارٍ بناء المشهد..." : status === "complete" ? "أنشئ نسخة جديدة" : "إنشاء الفيديو"}
+              <button type="button" onClick={handleSubmit} disabled={status === "processing" || !prompt.trim()} className="mt-9 flex w-full items-center justify-center gap-3 rounded-xl border border-amber-100/30 bg-gradient-to-r from-amber-100 to-amber-300 px-6 py-4 font-bold text-slate-950 shadow-lg shadow-amber-200/10 transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50">
+                {status === "processing" ? "جارٍ توليد الفيديو..." : status === "complete" ? "أنشئ نسخة جديدة" : "إنشاء الفيديو"}
                 <span aria-hidden="true">✦</span>
               </button>
+              {status === "processing" && <p className="mt-4 text-center text-sm text-cyan-200">يعمل Seedance 2.5 على بناء المشهد. قد يستغرق ذلك عدة دقائق.</p>}
+              {status === "error" && <p role="alert" className="mt-4 text-center text-sm text-rose-300">{errorMessage}</p>}
             </section>
 
             <aside className="flex flex-col gap-6">
               <div className="rounded-[2rem] border border-cyan-200/15 bg-slate-950/60 p-5 shadow-xl shadow-cyan-950/20">
                 <div className="mb-5 flex items-center justify-between"><p className="text-xs uppercase tracking-[0.25em] text-cyan-200/70">Output preview</p><span className="rounded-full border border-emerald-300/30 px-2 py-1 text-[10px] text-emerald-200">{status === "processing" ? "PROCESSING" : status === "complete" ? "READY" : "STANDBY"}</span></div>
                 <div className={`relative aspect-video overflow-hidden rounded-2xl border border-white/10 bg-[#11101e] ${ratio === "9:16" ? "mx-auto max-w-[12rem]" : ""}`}>
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(251,191,36,0.65),transparent_14%),radial-gradient(circle_at_25%_70%,rgba(34,211,238,0.55),transparent_24%),linear-gradient(135deg,#31204c,#050510_68%)]" />
+                  {videoUrl ? <video src={videoUrl} controls playsInline className="h-full w-full object-cover" /> : <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(251,191,36,0.65),transparent_14%),radial-gradient(circle_at_25%_70%,rgba(34,211,238,0.55),transparent_24%),linear-gradient(135deg,#31204c,#050510_68%)]" />}
                   {status === "processing" && <div className="absolute inset-x-0 top-0 h-1 animate-pulse bg-amber-200 shadow-[0_0_20px_#fde68a]" />}
-                  <div className="absolute inset-x-4 bottom-4"><p className="text-[10px] uppercase tracking-[0.25em] text-white/60">{status === "complete" ? "Demo render" : "Your canvas"}</p><p className="mt-1 truncate text-sm font-semibold text-white">{prompt || "ابدأ بكتابة فكرة المشهد"}</p></div>
+                  {!videoUrl && <div className="absolute inset-x-4 bottom-4"><p className="text-[10px] uppercase tracking-[0.25em] text-white/60">{status === "processing" ? "Generating" : "Your canvas"}</p><p className="mt-1 truncate text-sm font-semibold text-white">{prompt || "ابدأ بكتابة فكرة المشهد"}</p></div>}
                 </div>
-                <div className="mt-5 grid grid-cols-2 gap-3 text-xs text-slate-400"><span>Model <strong className="block pt-1 text-white">{model}</strong></span><span>Duration <strong className="block pt-1 text-white">{duration}</strong></span><span>Ratio <strong className="block pt-1 text-white">{ratio}</strong></span><span>Engine <strong className="block pt-1 text-emerald-200">Demo mode</strong></span></div>
+                <div className="mt-5 grid grid-cols-2 gap-3 text-xs text-slate-400"><span>Model <strong className="block pt-1 text-white">{model}</strong></span><span>Duration <strong className="block pt-1 text-white">{duration}</strong></span><span>Ratio <strong className="block pt-1 text-white">{ratio}</strong></span><span>Engine <strong className="block pt-1 text-emerald-200">Seedance 2.5</strong></span></div>
               </div>
-              <div className="rounded-2xl border border-amber-100/10 bg-amber-100/[0.04] p-5 text-sm leading-7 text-slate-400"><span className="mb-2 block text-amber-100">ملاحظة الاستوديو</span>هذه معاينة Demo محلية. عند ربط مزود التوليد لاحقًا، ستبقى مفاتيح API على الخادم ولن تظهر في الواجهة.</div>
+              <div className="rounded-2xl border border-amber-100/10 bg-amber-100/[0.04] p-5 text-sm leading-7 text-slate-400"><span className="mb-2 block text-amber-100">ملاحظة الاستوديو</span>التوليد يتم عبر Vercel AI Gateway. يبقى مفتاح API على الخادم ولا يظهر في الواجهة.</div>
             </aside>
           </div>
         </section>

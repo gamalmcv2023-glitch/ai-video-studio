@@ -48,7 +48,7 @@ export default function CreatePage() {
   }
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#0b0b0c] text-[#f4f0e7]">
+    <main className="create-shell min-h-screen overflow-hidden bg-[#0b0b0c] text-[#f4f0e7]">
       <div className="pointer-events-none fixed inset-0 opacity-70 [background:radial-gradient(circle_at_15%_10%,rgba(198,165,106,0.12),transparent_22%),radial-gradient(circle_at_85%_25%,rgba(75,108,120,0.12),transparent_30%)]" />
       <div className="relative mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-10">
         <header className="flex items-center justify-between border-b border-amber-100/10 pb-6">

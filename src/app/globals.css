@@ -365,3 +365,80 @@ main:not(.site-shell) h1, main:not(.site-shell) h2, main:not(.site-shell) p, mai
   .create-hero h1 { font-size: 27px; }
   .create-card, .result-card, .history-card { padding: 12px; border-radius: 10px; }
 }
+
+/* Final compact mobile layer: desktop rules above remain unchanged. */
+@media (max-width: 768px) {
+  html, body, main { width: 100%; max-width: 100vw; overflow-x: hidden; }
+
+  .site-shell .topbar,
+  .site-shell .hero-section,
+  .site-shell .tool-strip,
+  .site-shell .content-section,
+  .site-shell .footer,
+  .create-frame,
+  .studio-shell > div.relative {
+    width: calc(100% - 20px);
+    max-width: 100%;
+  }
+
+  .site-shell .topbar { height: 50px; min-height: 50px; }
+  .site-shell .hero-section { grid-template-columns: 1fr; gap: 14px; min-height: 0; padding: 16px 0 14px; }
+  .site-shell .hero-copy h1 { max-width: 100%; font-size: 28px; line-height: 1.12; }
+  .site-shell .hero-text { margin: 8px 0 12px; font-size: 13px; line-height: 1.55; }
+  .site-shell .hero-actions .button { padding: 8px 11px; font-size: 14px; }
+  .site-shell .hero-meta { gap: 10px; margin-top: 12px; font-size: 11px; }
+  .site-shell .hero-meta b { font-size: 13px; }
+  .site-shell .hero-art { min-height: 142px; }
+  .site-shell .hero-sun { font-size: 58px; }
+
+  .site-shell .tool-strip { display: grid; grid-template-columns: 1fr; gap: 6px; border: 0; }
+  .site-shell .tool-card { min-height: 46px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 4px; background: rgba(17, 17, 17, .9); box-shadow: 0 0 14px rgba(201, 164, 92, .06); }
+  .site-shell .tool-card b { font-size: 14px; }
+  .site-shell .tool-card small { margin-top: 2px; font-size: 11px; }
+  .site-shell .tool-index { font-size: 11px; }
+
+  .site-shell .content-section { display: grid; grid-template-columns: 1fr; gap: 10px; padding-top: 20px; }
+  .site-shell .section-heading h2 { font-size: 19px; line-height: 1.25; }
+  .site-shell .section-heading > p:last-child { font-size: 13px; line-height: 1.55; }
+  .site-shell .chat-panel, .site-shell .script-panel, .site-shell .empty-work { border-radius: 4px; background: rgba(17, 17, 17, .9); box-shadow: 0 0 16px rgba(201, 164, 92, .07); }
+  .site-shell .chat-messages { min-height: 96px; padding: 9px; }
+  .site-shell .chat-messages p { font-size: 13px; }
+  .site-shell .empty-chat { padding: 12px 0; }
+  .site-shell .empty-chat p, .site-shell .script-placeholder p { font-size: 13px; }
+  .site-shell .empty-chat small, .site-shell .script-placeholder small { font-size: 11px; }
+  .site-shell .script-panel { padding: 10px; }
+  .site-shell .script-form { grid-template-columns: 1fr; gap: 8px; }
+  .site-shell .form-row { grid-template-columns: 1fr; gap: 8px; }
+  .site-shell .script-form label { font-size: 13px; }
+  .site-shell .script-form input, .site-shell .script-form select { padding: 8px; font-size: 13px; }
+  .site-shell .script-form .button { width: 100%; margin-top: 2px; font-size: 14px; }
+  .site-shell .script-placeholder { min-height: 110px; }
+  .site-shell .work-section { display: grid; gap: 10px; padding-bottom: 20px; }
+  .site-shell .empty-work { min-width: 0; margin-top: 0; padding: 12px; }
+  .site-shell .footer { min-height: 40px; gap: 6px; padding: 9px 0; font-size: 11px; }
+
+  .create-shell .create-hero { padding: 14px 0 10px; }
+  .create-shell .create-hero h1 { font-size: 26px; }
+  .create-shell .create-hero p:last-child { font-size: 13px; }
+  .create-shell .create-card, .create-shell .result-card, .create-shell .history-card { padding: 11px; border: 1px solid var(--gold); border-radius: 5px; background: #111; box-shadow: 0 0 16px rgba(201, 164, 92, .07); }
+  .create-shell .section-bar { margin-bottom: 10px; padding-bottom: 8px; }
+  .create-shell .section-bar h2 { font-size: 18px; }
+  .create-shell .field-block { margin-top: 10px; }
+  .create-shell .field-block > label { margin-bottom: 5px; font-size: 13px; }
+  .create-shell .field-block textarea { min-height: 88px; font-size: 13px; }
+  .create-shell .field-block select { min-height: 38px; font-size: 13px; }
+  .create-shell .choice, .create-shell .ratio { min-height: 38px; padding: 7px 8px; font-size: 13px; }
+  .create-shell .generate-button { min-height: 42px; margin-top: 12px; font-size: 15px; }
+
+  .studio-shell h1 { max-width: 100%; font-size: 28px !important; line-height: 1.2 !important; }
+  .studio-shell h2 { font-size: 18px !important; }
+  .studio-shell section { padding-block: 12px; }
+  .studio-shell [class*="min-h-[calc(100vh"], .studio-shell [class*="min-h-[520px"], .studio-shell [class*="min-h-[580px"], .studio-shell [class*="min-h-[440px"] { min-height: 0 !important; }
+  .studio-shell [class*="text-base"] { font-size: .85rem !important; }
+  .studio-shell [class*="text-sm"] { font-size: .8rem !important; }
+  .studio-shell [class*="text-xs"] { font-size: .75rem !important; }
+  .studio-shell form { gap: 8px; }
+  .studio-shell button { font-size: 14px; }
+  .studio-shell section, .studio-shell aside, .studio-shell form { max-width: 100%; }
+  .studio-shell dl { grid-template-columns: 1fr !important; }
+}

@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Video Studio",
-  description: "منصة ذكية لإنشاء الفيديوهات والمرئيات التسويقية بسرعة وكفاءة.",
+  title: "منصة الشرقاوي | استوديو الإبداع الذكي",
+  description: "منصة الشرقاوي لصناعة الفيديو والسكريبتات الإبداعية.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

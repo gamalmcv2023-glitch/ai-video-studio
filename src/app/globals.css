@@ -323,6 +323,28 @@ main:not(.site-shell) h1, main:not(.site-shell) h2, main:not(.site-shell) p, mai
 .create-footer { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding-top: 13px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
 .create-footer strong { color: var(--text); }
 .create-footer a { margin-right: auto; color: var(--gold-light); }
+.model-creator { display: flex; flex-direction: column; gap: 0; }
+.model-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 2px; }
+.model-grid-all { max-height: none; overflow: visible; }
+.model-card { display: flex; min-width: 0; align-items: center; gap: 7px; padding: 7px; border: 1px solid rgba(201, 164, 92, .16); border-radius: 6px; background: #0d0d0e; color: var(--text); text-align: right; }
+.model-card.active { border-color: var(--gold-light); background: rgba(201, 164, 92, .12); }
+.model-logo { display: grid; width: 27px; height: 27px; flex: 0 0 auto; place-items: center; border: 1px solid rgba(229, 199, 122, .55); border-radius: 5px; color: var(--gold-light); font: 700 10px Georgia, serif; }
+.model-logo.large { width: 34px; height: 34px; font-size: 12px; }
+.model-card-copy { min-width: 0; }
+.model-card strong, .model-card small, .model-info-heading strong, .model-info-heading small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.model-card strong { font-size: 10px; }
+.model-card small { margin-top: 2px; color: var(--muted); font-size: 8px; }
+.model-info { padding: 10px; border: 1px solid rgba(201, 164, 92, .22); border-radius: 7px; background: rgba(201, 164, 92, .05); }
+.model-info-heading { display: flex; align-items: center; gap: 8px; }
+.model-info-heading strong { font-size: 13px; }
+.model-info-heading small { margin-top: 3px; color: var(--muted); font-size: 9px; }
+.model-info p { margin: 8px 0; color: #c7bfb2; font-size: 10px; line-height: 1.6; }
+.model-capabilities { display: flex; flex-wrap: wrap; gap: 5px; }
+.model-capabilities span { padding: 3px 6px; border: 1px solid rgba(201, 164, 92, .2); border-radius: 4px; color: var(--gold-light); font-size: 8px; }
+.audio-option { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 9px 10px; border: 1px solid rgba(201, 164, 92, .18); border-radius: 7px; background: rgba(201, 164, 92, .04); }
+.audio-option label { color: #d7c8aa; font-size: 11px; }
+.audio-option input { accent-color: var(--gold); }
+.audio-option small { color: var(--muted); font-size: 9px; }
 
 @media (min-width: 481px) {
   .create-frame { width: min(100% - 40px, 760px); }
@@ -342,6 +364,7 @@ main:not(.site-shell) h1, main:not(.site-shell) h2, main:not(.site-shell) p, mai
   .result-card, .history-card { padding: 18px; }
   .result-card { max-width: 760px; margin-inline: auto; }
   .history-card { max-width: 760px; margin-inline: auto; }
+  .model-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 @media (max-width: 480px) {
@@ -364,6 +387,9 @@ main:not(.site-shell) h1, main:not(.site-shell) h2, main:not(.site-shell) p, mai
   .header-note { font-size: 7px; }
   .create-hero h1 { font-size: 27px; }
   .create-card, .result-card, .history-card { padding: 12px; border-radius: 10px; }
+  .model-grid { grid-template-columns: 1fr; }
+  .model-card { padding: 6px; }
+  .model-info { padding: 9px; }
 }
 
 /* Final compact mobile layer: desktop rules above remain unchanged. */

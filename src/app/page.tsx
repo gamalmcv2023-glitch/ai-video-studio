@@ -39,7 +39,7 @@ export default function Home() {
       </header>
 
       <section className="hero-section">
-        <div className="hero-copy"><p className="eyebrow">منصة صناعة المحتوى · 01</p><h1>حوّل الفكرة<br /><em>إلى أثر بصري.</em></h1><p className="hero-text">مساحة عمل عربية لصناعة فيديوهات تحمل هويتك، من أول سطر إلى آخر لقطة.</p><div className="hero-actions"><Link href="/create" className="button button-gold">إنشاء فيديو <span>↗</span></Link><a href="#astra" className="button button-quiet">استكشف المنصة</a></div><div className="hero-meta"><span><b>04</b> أدوات إبداعية</span><span><b>15–30</b> ثانية للسكريبت</span><span><b>24/7</b> مساحة عمل</span></div></div>
+        <div className="hero-copy"><p className="eyebrow">منصة صناعة المحتوى · 01</p><h1>حوّل الفكرة<br /><em>إلى أثر بصري.</em></h1><p className="hero-text">مساحة عمل عربية لصناعة فيديوهات تحمل هويتك، من أول سطر إلى آخر لقطة.</p><div className="hero-actions"><Link href="/create" className="button button-gold">إنشاء فيديو <span>↗</span></Link><Link href="/chat" className="button button-quiet">شات Astra <span>↗</span></Link><a href="#astra" className="button button-quiet">استكشف المنصة</a></div><div className="hero-meta"><span><b>04</b> أدوات إبداعية</span><span><b>15–30</b> ثانية للسكريبت</span><span><b>24/7</b> مساحة عمل</span></div></div>
         <div className="hero-art" aria-label="معاينة مشهد سينمائي"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="hero-sun">ش</div><div className="art-caption"><span>مشهد 01 / 04</span><strong>بداية جديدة</strong></div></div>
       </section>
 

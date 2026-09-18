@@ -1,0 +1,26 @@
+export type VideoModel = { id:string; name:string; provider:string; logo:string; description:string; modes:Array<"text"|"image">; durations:number[]; maxDuration:number; audio?:boolean };
+export const VIDEO_MODELS: VideoModel[] = [
+{ id:"bytedance/seedance-2.5",name:"سيدانس 2.5",provider:"ByteDance",logo:"SD",description:"سينمائي متقدم • صوت متزامن • مراجع متعددة",modes:["text","image"],durations:[4,5,6,8,10,12,15,20,25,30],maxDuration:30,audio:true },
+{ id:"bytedance/seedance-2.0",name:"سيدانس 2.0",provider:"ByteDance",logo:"SD",description:"نص + صورة • مراجع متعددة • صوت",modes:["text","image"],durations:[4,5,6,8,10,12,15],maxDuration:15,audio:true },
+{ id:"bytedance/seedance-2.0-fast",name:"سيدانس 2.0 السريع",provider:"ByteDance",logo:"SD",description:"سرعة أعلى • تكلفة أقل",modes:["text","image"],durations:[4,5,6,8,10,12,15],maxDuration:15,audio:true },
+{ id:"bytedance/seedance-v1.5-pro",name:"سيدانس 1.5 برو",provider:"ByteDance",logo:"SD",description:"فيديو وصوت متزامنان",modes:["text","image"],durations:[4,5,6,8,10,12],maxDuration:12,audio:true },
+{ id:"google/veo-3.1-generate-001",name:"فيو 3.1",provider:"Google",logo:"V",description:"واقعية سينمائية • صوت أصلي",modes:["text","image"],durations:[4,6,8],maxDuration:8,audio:true },
+{ id:"google/veo-3.1-fast-generate-001",name:"فيو 3.1 السريع",provider:"Google",logo:"V",description:"جودة عالية مع توليد أسرع",modes:["text","image"],durations:[4,6,8],maxDuration:8,audio:true },
+{ id:"google/veo-3.1-lite-generate-001",name:"فيو 3.1 لايت",provider:"Google",logo:"V",description:"خيار أخف للتجارب السريعة",modes:["text","image"],durations:[4,6,8],maxDuration:8,audio:true },
+{ id:"google/veo-3.0-generate-001",name:"فيو 3.0",provider:"Google",logo:"V",description:"جودة سينمائية • صوت",modes:["text","image"],durations:[4,6,8],maxDuration:8,audio:true },
+{ id:"google/veo-3.0-fast-generate-001",name:"فيو 3.0 السريع",provider:"Google",logo:"V",description:"توليد سريع مع صوت",modes:["text","image"],durations:[4,6,8],maxDuration:8,audio:true },
+{ id:"klingai/kling-v3.0-t2v",name:"كلينج 3.0",provider:"Kling AI",logo:"K",description:"حركة واقعية • مشاهد متعددة • صوت",modes:["text"],durations:[3,5,8,10,15],maxDuration:15,audio:true },
+{ id:"klingai/kling-v3.0-i2v",name:"كلينج 3.0 صورة",provider:"Kling AI",logo:"K",description:"صورة إلى فيديو • أول وآخر إطار",modes:["image"],durations:[3,5,8,10,15],maxDuration:15,audio:true },
+{ id:"klingai/kling-v2.6-t2v",name:"كلينج 2.6",provider:"Kling AI",logo:"K",description:"نص إلى فيديو • صوت أصلي",modes:["text"],durations:[5,10],maxDuration:10,audio:true },
+{ id:"klingai/kling-v2.6-i2v",name:"كلينج 2.6 صورة",provider:"Kling AI",logo:"K",description:"تحريك الصور • صوت",modes:["image"],durations:[5,10],maxDuration:10,audio:true },
+{ id:"klingai/kling-v2.5-turbo-t2v",name:"كلينج 2.5 توربو",provider:"Kling AI",logo:"K",description:"توليد سريع",modes:["text"],durations:[5,10],maxDuration:10 },
+{ id:"klingai/kling-v2.5-turbo-i2v",name:"كلينج 2.5 توربو صورة",provider:"Kling AI",logo:"K",description:"تحريك الصور بسرعة",modes:["image"],durations:[5,10],maxDuration:10 },
+{ id:"alibaba/wan-v3.0-video",name:"وان 3.0",provider:"Alibaba Cloud",logo:"W",description:"نص + صورة + مراجع • حتى 30 ثانية",modes:["text","image"],durations:[2,3,4,5,6,8,10,15,20,25,30],maxDuration:30,audio:true },
+{ id:"alibaba/wan-v2.7-t2v",name:"وان 2.7",provider:"Alibaba Cloud",logo:"W",description:"نص إلى فيديو",modes:["text"],durations:[2,5,10,15],maxDuration:15,audio:true },
+{ id:"alibaba/wan-v2.6-t2v",name:"وان 2.6",provider:"Alibaba Cloud",logo:"W",description:"نص إلى فيديو • صوت",modes:["text"],durations:[5,10,15],maxDuration:15,audio:true },
+{ id:"alibaba/wan-v2.6-i2v",name:"وان 2.6 صورة",provider:"Alibaba Cloud",logo:"W",description:"تحريك الصور • صوت اختياري",modes:["image"],durations:[5,10,15],maxDuration:15,audio:true },
+{ id:"alibaba/wan-v2.6-i2v-flash",name:"وان 2.6 صورة فلاش",provider:"Alibaba Cloud",logo:"W",description:"تحريك الصور بسرعة أعلى",modes:["image"],durations:[5,10,15],maxDuration:15,audio:true },
+{ id:"xai/grok-imagine-video",name:"جروك Imagine",provider:"xAI",logo:"G",description:"سريع • نص + صورة",modes:["text","image"],durations:[1,2,3,5,8,10,12,15],maxDuration:15 },
+{ id:"minimax/video-01",name:"ميني ماكس",provider:"MiniMax",logo:"M",description:"نص + صورة • حركة سينمائية",modes:["text","image"],durations:[5,6,10],maxDuration:10 },
+];
+export function getVideoModel(id:string){return VIDEO_MODELS.find(model=>model.id===id);}

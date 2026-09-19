@@ -323,7 +323,7 @@ main:not(.site-shell) h1, main:not(.site-shell) h2, main:not(.site-shell) p, mai
 .create-footer { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding-top: 13px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
 .create-footer strong { color: var(--text); }
 .create-footer a { margin-right: auto; color: var(--gold-light); }
-.model-creator { display: flex; flex-direction: column; gap: 0; }
+.model-creator { display: flex; min-width: 0; flex-direction: column; gap: 0; }
 .model-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 2px; }
 .model-grid-all { max-height: none; overflow: visible; }
 .model-card { display: flex; min-width: 0; align-items: center; gap: 7px; padding: 7px; border: 1px solid rgba(201, 164, 92, .16); border-radius: 6px; background: #0d0d0e; color: var(--text); text-align: right; }
@@ -334,11 +334,6 @@ main:not(.site-shell) h1, main:not(.site-shell) h2, main:not(.site-shell) p, mai
 .model-card strong, .model-card small, .model-info-heading strong, .model-info-heading small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .model-card strong { font-size: 10px; }
 .model-card small { margin-top: 2px; color: var(--muted); font-size: 8px; }
-.model-info { padding: 10px; border: 1px solid rgba(201, 164, 92, .22); border-radius: 7px; background: rgba(201, 164, 92, .05); }
-.model-info-heading { display: flex; align-items: center; gap: 8px; }
-.model-info-heading strong { font-size: 13px; }
-.model-info-heading small { margin-top: 3px; color: var(--muted); font-size: 9px; }
-.model-info p { margin: 8px 0; color: #c7bfb2; font-size: 10px; line-height: 1.6; }
 .model-capabilities { display: flex; flex-wrap: wrap; gap: 5px; }
 .model-capabilities span { padding: 3px 6px; border: 1px solid rgba(201, 164, 92, .2); border-radius: 4px; color: var(--gold-light); font-size: 8px; }
 .audio-option { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 9px 10px; border: 1px solid rgba(201, 164, 92, .18); border-radius: 7px; background: rgba(201, 164, 92, .04); }
@@ -389,7 +384,6 @@ main:not(.site-shell) h1, main:not(.site-shell) h2, main:not(.site-shell) p, mai
   .create-card, .result-card, .history-card { padding: 12px; border-radius: 10px; }
   .model-grid { grid-template-columns: 1fr; }
   .model-card { padding: 6px; }
-  .model-info { padding: 9px; }
 }
 
 /* Final compact mobile layer: desktop rules above remain unchanged. */
@@ -454,6 +448,10 @@ main:not(.site-shell) h1, main:not(.site-shell) h2, main:not(.site-shell) p, mai
   .create-shell .field-block textarea { min-height: 88px; font-size: 13px; }
   .create-shell .field-block select { min-height: 38px; font-size: 13px; }
   .create-shell .choice, .create-shell .ratio { min-height: 38px; padding: 7px 8px; font-size: 13px; }
+  .create-shell .mode-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .create-shell .mode-list .choice { display: grid; justify-items: center; gap: 2px; min-width: 0; min-height: 50px; padding-inline: 5px; text-align: center; }
+  .create-shell .mode-list .choice span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .create-shell .mode-list .choice.unsupported { cursor: not-allowed; opacity: .42; }
   .create-shell .generate-button { min-height: 42px; margin-top: 12px; font-size: 15px; }
 
   .studio-shell h1 { max-width: 100%; font-size: 28px !important; line-height: 1.2 !important; }
@@ -467,4 +465,32 @@ main:not(.site-shell) h1, main:not(.site-shell) h2, main:not(.site-shell) p, mai
   .studio-shell button { font-size: 14px; }
   .studio-shell section, .studio-shell aside, .studio-shell form { max-width: 100%; }
   .studio-shell dl { grid-template-columns: 1fr !important; }
+}
+
+/* Video generation model picker */
+.model-field { position: relative; }
+.model-trigger { display: flex; align-items: center; gap: 9px; width: 100%; min-height: 48px; padding: 8px 10px; border: 1px solid rgba(201, 164, 92, .28); border-radius: 7px; background: #0d0d0e; color: var(--text); text-align: right; }
+.model-trigger.open { border-color: var(--gold-light); background: rgba(201, 164, 92, .08); }
+.model-trigger-copy { min-width: 0; flex: 1; }
+.model-trigger-copy strong, .model-trigger-copy small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.model-trigger-copy strong { color: var(--gold-light); font-size: 13px; }
+.model-trigger-copy small { margin-top: 3px; color: var(--muted); font-size: 10px; }
+.model-chevron { color: var(--gold-light); font-size: 18px; line-height: 1; }
+.model-options { position: absolute; z-index: 5; top: calc(100% + 6px); right: 0; left: 0; display: grid; gap: 5px; width: 100%; max-width: 100%; max-height: min(360px, 55vh); overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; padding: 6px; border: 1px solid var(--gold); border-radius: 8px; background: #0b0b0c; box-shadow: 0 16px 34px rgba(0, 0, 0, .58); scrollbar-color: var(--gold) #171717; }
+.model-option { display: flex; align-items: flex-start; gap: 8px; width: 100%; min-width: 0; box-sizing: border-box; padding: 8px; border: 1px solid rgba(201, 164, 92, .14); border-radius: 6px; background: rgba(255, 255, 255, .025); color: var(--text); text-align: right; }
+.model-option:hover, .model-option.active { border-color: var(--gold-light); background: rgba(201, 164, 92, .12); }
+.model-card-copy { min-width: 0; flex: 1; }
+.model-card-copy strong, .model-card-copy small, .model-option-capabilities { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.model-card-copy strong { color: var(--text); font-size: 12px; }
+.model-card-copy small { margin-top: 2px; color: var(--muted); font-size: 10px; }
+.model-option-capabilities { margin-top: 4px; color: #79d7d0; font-size: 9px; }
+.model-option-mark { width: 14px; color: var(--gold-light); font-size: 13px; text-align: center; }
+
+@media (max-width: 768px) {
+  .create-shell .model-options { max-height: 52vh; }
+  .create-shell .model-trigger { min-height: 44px; }
+  .create-shell .model-option { min-height: 55px; }
+  .create-shell .model-card-copy strong { font-size: 11px; }
+  .create-shell .model-card-copy small { font-size: 9px; }
+  .create-shell .model-creator .result-card { margin-top: 0; }
 }

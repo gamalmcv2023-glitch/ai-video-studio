@@ -24,7 +24,13 @@ function getProviderName(provider: string) {
   return providerNames[provider] ?? provider;
 }
 
-type HistoryItem = { id: number; prompt: string; url: string; createdAt: string };
+const dropdownModelIds = [
+  "bytedance/seedance-2.5",
+  "bytedance/seedance-2.0",
+  "google/veo-3.1-generate-001",
+  "klingai/kling-v3.0-t2v",
+  "alibaba/wan-v3.0-video",
+];
 
 export default function CreatePage() {
   const [prompt, setPrompt] = useState("");
@@ -39,7 +45,6 @@ export default function CreatePage() {
   const [status, setStatus] = useState<"idle" | "processing" | "complete" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
-  const [history, setHistory] = useState<HistoryItem[]>([]);
   const generationModes: Array<"text" | "image"> = ["text", "image"];
 
   function selectModel(modelId: string) {
@@ -70,7 +75,6 @@ export default function CreatePage() {
 
   async function handleSubmit() {
     if (!prompt.trim()) return;
-    const modelName = selectedModel.name;
     setStatus("processing");
     setErrorMessage("");
     setVideoUrl("");
@@ -80,7 +84,6 @@ export default function CreatePage() {
       if (!response.ok) throw new Error(typeof result.error === "string" ? result.error : "تعذر إنشاء الفيديو.");
       const url = `data:${result.video.mediaType};base64,${result.video.data}`;
       setVideoUrl(url);
-      setHistory((current) => [{ id: Date.now(), prompt: prompt.trim(), url, createdAt: `${new Date().toLocaleTimeString("ar", { hour: "2-digit", minute: "2-digit" })} · ${modelName}` }, ...current]);
       setStatus("complete");
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : "تعذر إنشاء الفيديو.");
@@ -96,9 +99,9 @@ export default function CreatePage() {
         <section className="create-hero"><p className="eyebrow">Creator suite · 01</p><h1>اصنع المشهد الذي لا يُنسى.</h1><p>حوّل رؤيتك إلى فيديو سينمائي بإيقاع وهوية بصرية واضحة.</p></section>
 
         <section className="create-card model-creator" aria-label="توليد الفيديو">
-          <div className="section-bar"><div><span className="eyebrow">استوديو الإبداع</span><h2>توليد الفيديو</h2></div><span className="step-count">01 / 01</span></div>
-          <div className="field-block"><label>طريقة التوليد</label><div className="choice-list mode-list">{generationModes.map((mode) => { const isSupported = selectedModel.modes.includes(mode); return <button key={mode} type="button" disabled={!isSupported} aria-disabled={!isSupported} onClick={() => setVideoMode(mode)} className={`${videoMode === mode ? "choice active" : "choice"}${!isSupported ? " unsupported" : ""}`}>{mode === "text" ? "✍️ وصف إلى فيديو" : "🖼️ صورة إلى فيديو"}<span>{isSupported ? (mode === "text" ? "اكتب المشهد" : "حرّك صورة") : "غير متاح لهذا النموذج"}</span></button>; })}</div></div>
-          <div className="field-block model-field"><label id="model-label">اختيار النموذج</label><button type="button" className={`model-trigger ${modelMenuOpen ? "open" : ""}`} aria-labelledby="model-label" aria-haspopup="listbox" aria-expanded={modelMenuOpen} aria-controls="model-options" onClick={() => setModelMenuOpen((open) => !open)}><span className="model-logo">{selectedModel.logo}</span><span className="model-trigger-copy"><strong>{selectedModel.name}</strong><small>{getProviderName(selectedModel.provider)}</small></span><span className="model-chevron" aria-hidden="true">⌄</span></button>{modelMenuOpen && <div id="model-options" className="model-options" role="listbox" aria-label="نماذج الفيديو">{VIDEO_MODELS.map((model) => <button key={model.id} type="button" role="option" aria-selected={selectedModel.id === model.id} onClick={() => selectModel(model.id)} className={`model-option ${selectedModel.id === model.id ? "active" : ""}`}><span className="model-logo">{model.logo}</span><span className="model-card-copy"><strong>{model.name}</strong><small>{getProviderName(model.provider)}</small><span className="model-option-capabilities">{model.modes.map((mode) => mode === "text" ? "وصف" : "صورة").join(" · ")}{model.audio ? " · صوت" : ""}</span></span><span className="model-option-mark" aria-hidden="true">{selectedModel.id === model.id ? "✓" : ""}</span></button>)}</div>}</div>
+          <div className="section-bar"><div><span className="eyebrow">استوديو الإبداع</span><h2>🎬 توليد الفيديو</h2></div><span className="step-count">01 / 01</span></div>
+          <div className="field-block mode-field"><label>طريقة التوليد</label><div className="choice-list mode-list">{generationModes.map((mode) => { const isSupported = selectedModel.modes.includes(mode); return <button key={mode} type="button" disabled={!isSupported} aria-disabled={!isSupported} onClick={() => setVideoMode(mode)} className={`${videoMode === mode ? "choice active" : "choice"}${!isSupported ? " unsupported" : ""}`}>{mode === "text" ? "✍️ وصف إلى فيديو" : "🖼️ صورة إلى فيديو"}<span>{isSupported ? (mode === "text" ? "اكتب المشهد" : "حرّك صورة") : "غير متاح لهذا النموذج"}</span></button>; })}</div></div>
+          <div className="field-block model-field"><label id="model-label">اختيار النموذج</label><button type="button" className={`model-trigger ${modelMenuOpen ? "open" : ""}`} aria-labelledby="model-label" aria-haspopup="listbox" aria-expanded={modelMenuOpen} aria-controls="model-options" onClick={() => setModelMenuOpen((open) => !open)}><span className="model-logo">{selectedModel.logo}</span><span className="model-trigger-copy"><strong>{selectedModel.name}</strong><small>{getProviderName(selectedModel.provider)}</small></span><span className="model-chevron" aria-hidden="true">⌄</span></button>{modelMenuOpen && <div id="model-options" className="model-options" role="listbox" aria-label="نماذج الفيديو">{dropdownModelIds.map((modelId) => VIDEO_MODELS.find((model) => model.id === modelId)).filter((model): model is (typeof VIDEO_MODELS)[number] => Boolean(model)).map((model) => <button key={model.id} type="button" role="option" aria-selected={selectedModel.id === model.id} onClick={() => selectModel(model.id)} className={`model-option ${selectedModel.id === model.id ? "active" : ""}`}><span className="model-logo">{model.logo}</span><span className="model-card-copy"><strong>{model.name}</strong><small>{getProviderName(model.provider)}</small><span className="model-option-capabilities">{model.modes.map((mode) => mode === "text" ? "وصف" : "صورة").join(" · ")}{model.audio ? " · صوت" : ""}</span></span><span className="model-option-mark" aria-hidden="true">{selectedModel.id === model.id ? "✓" : ""}</span></button>)}</div>}</div>
           <div className="field-block"><label htmlFor="duration">مدة الفيديو</label><select id="duration" value={duration} onChange={(event) => setDuration(Number(event.target.value))}>{selectedModel.durations.map((value) => <option key={value} value={value}>{value} ثانية</option>)}</select></div>
           {selectedModel.audio && <div className="audio-option"><label><input type="checkbox" checked={audio} onChange={(event) => setAudio(event.target.checked)} /> <span>🔊 إنشاء صوت</span></label><small>متاح لهذا النموذج</small></div>}
           <div className="field-block"><label htmlFor="prompt">وصف المشهد</label><textarea id="prompt" value={prompt} onChange={(event) => setPrompt(event.target.value)} placeholder="مثال: لقطة سينمائية لمدينة مستقبلية بعد المطر، انعكاسات نيون، حركة كاميرا بطيئة..." /></div>
@@ -110,8 +113,6 @@ export default function CreatePage() {
         </section>
 
         <section className="result-card" aria-live="polite"><div className="section-bar"><div><span className="eyebrow">المخرجات</span><h2>نتيجة الفيديو</h2></div><span className={`result-status ${status}`}>{status === "processing" ? "جارٍ التوليد" : status === "complete" ? "جاهز" : "بانتظار الوصف"}</span></div><div className="video-frame">{videoUrl ? <video src={videoUrl} controls playsInline /> : <div className="video-placeholder"><span>✧</span><p>{status === "processing" ? "نجهّز المشهد الآن" : "سيظهر الفيديو هنا"}</p><small>{prompt || "اكتب وصفًا لبدء التوليد"}</small></div>}</div>{videoUrl && <div className="result-actions"><a href={videoUrl} download="generated-video.mp4" className="small-button">تنزيل ↧</a><a href={videoUrl} target="_blank" rel="noreferrer" className="small-button quiet">معاينة ↗</a></div>}</section>
-
-        <section className="history-card"><div className="section-bar"><div><span className="eyebrow">History</span><h2>آخر الفيديوهات</h2></div><span className="step-count">{history.length} نتائج</span></div>{history.length ? <div className="history-list">{history.map((item) => <button type="button" key={item.id} onClick={() => setVideoUrl(item.url)} className="history-item"><span className="history-thumb"><video src={item.url} muted /></span><span><strong>{item.prompt}</strong><small>{item.createdAt}</small></span><span>↗</span></button>)}</div> : <p className="empty-history">ستظهر الفيديوهات التي تنشئها هنا.</p>}</section>
 
         <footer className="create-footer"><strong>منصة الشرقاوي</strong><span>صناعة أفكار تستحق أن تُرى</span><Link href="/">العودة للرئيسية ↑</Link></footer>
       </div>
